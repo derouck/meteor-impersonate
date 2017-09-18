@@ -1,7 +1,7 @@
 Package.describe({
-  name: "gwendall:impersonate",
+  name: "twisterking:impersonate",
   summary: "Impersonate users in Meteor",
-  version: "0.2.2",
+  version: "0.2.3",
   git: "https://github.com/gwendall/meteor-impersonate.git",
 });
 
@@ -9,9 +9,7 @@ Package.onUse(function (api, where) {
 
   api.use([
     "accounts-base@1.2.2",
-    "reactive-var@1.0.6",
-    "templating@1.1.5",
-    "gwendall:body-events@0.1.6"
+    "reactive-var@1.0.6"
   ], "client");
 
   api.use([

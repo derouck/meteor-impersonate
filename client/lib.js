@@ -1,10 +1,8 @@
 Impersonate = { _user: null, _token: null, _active: new ReactiveVar(false) };
 
-
 Impersonate.isActive = function(){
   return Impersonate._active.get();
 };
-
 
 Impersonate.do = function(toUser, cb) {
   var params = { toUser: toUser };
@@ -12,6 +10,7 @@ Impersonate.do = function(toUser, cb) {
     params.fromUser = Impersonate._user;
     params.token = Impersonate._token;
   }
+
   Meteor.call("impersonate", params, function(err, res) {
     if (err) {
       console.log("Could not impersonate.", err);
@@ -47,18 +46,4 @@ Meteor.autorun(function() {
   Impersonate._active.set(false);
   Impersonate._user = null;
   Impersonate._token = null;
-});
-
-Template.body.events({
-  "click [data-impersonate]": function(e, data) {
-    var userId = $(e.currentTarget).attr("data-impersonate");
-    Impersonate.do(userId);
-  },
-  "click [data-unimpersonate]": function(e, data) {
-    Impersonate.undo();
-  }
-});
-
-Template.registerHelper("isImpersonating", function () {
-  return Impersonate._active.get();
 });

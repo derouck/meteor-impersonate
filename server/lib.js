@@ -79,7 +79,6 @@ Meteor.methods({
       params.token = Meteor._get(user, "services", "resume", "loginTokens", 0, "hashedToken");
     }
 
-
     // Check the fromUser is allowed to impersonate the toUser.
     // With the default auth method it's technically only necessary
     // to run this check on the first call but with other auth methods
