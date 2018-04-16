@@ -1,8 +1,17 @@
-Impersonate = { _user: null, _token: null, _active: new ReactiveVar(false) };
+Impersonate = {
+  _user: null, 
+  _token: null,
+  _active: new ReactiveVar(false),
+};
 
 Impersonate.isActive = function(){
   return Impersonate._active.get();
 };
+
+// Impersonate.isAdmin = function() {
+//   console.log('this._user,', this._user,);
+//   return Roles.userIsInRole(this._user, 'admin')
+// };
 
 Impersonate.do = function(toUser, cb) {
   var params = { toUser: toUser };
@@ -20,6 +29,17 @@ Impersonate.do = function(toUser, cb) {
       if (!Impersonate._user) {
         Impersonate._user = res.fromUser; // First impersonation
         Impersonate._token = res.token;
+        try {
+          Object.defineProperty(Impersonate, "_byAdmin", {
+            configurable: false,
+            writable: false,
+            enumerable: true,
+            value: Roles.userIsInRole(Impersonate._user, 'admin')
+          });
+        } catch(err) {
+          alert('Due to security reasons, the page has to be reloaded first! Please wait ...');
+          location.reload();
+        }
       }
       Impersonate._active.set(true);
       Meteor.connection.setUserId(res.toUser);
