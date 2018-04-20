@@ -94,7 +94,7 @@ Meteor.methods({
     // Post action hook
     Impersonate.afterSwitchUser.call(this, fromUser, params.toUser);
 
-    return { fromUser: currentUser, toUser: params.toUser, token: params.token };
+    return { fromUser: currentUser, toUser: params.toUser, token: params.token, byAdmin: Roles.userIsInRole(currentUser, 'admin') };
 
   }
 });
